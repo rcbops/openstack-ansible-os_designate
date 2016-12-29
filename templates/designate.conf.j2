@@ -151,7 +151,6 @@ enable_api_admin = False
 
 insecure = {{ keystone_service_internaluri_insecure | bool }}
 auth_type = {{ designate_keystone_auth_type }}
-signing_dir = {{ designate_system_user_home }}/cache/api
 auth_url = {{ keystone_service_adminurl }}
 auth_uri = {{ keystone_service_internaluri }}
 project_domain_id = {{ designate_service_project_domain_id }}
