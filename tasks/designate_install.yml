@@ -57,6 +57,7 @@
   file:
     path: "{{ designate_bin | dirname }}"
     state: directory
+    mode: "0755"
   register: designate_venv_dir
   when:
     - not designate_developer_mode | bool

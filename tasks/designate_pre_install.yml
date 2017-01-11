@@ -37,6 +37,7 @@
     group: "{{ item.group|default(designate_system_group_name) }}"
     mode: "{{ item.mode|default('0755') }}"
   with_items:
+    - { path: "/openstack/venvs", mode: "0755", owner: "root", group: "root" }
     - { path: "/etc/designate" }
     - { path: "/etc/designate/rootwrap.d", owner: "root", group: "root" }
     - { path: "/etc/sudoers.d", mode: "0750", owner: "root", group: "root" }
