@@ -29,17 +29,32 @@
       db_name: "{{ designate_pool_manager_galera_database }}"
       db_password: "{{ designate_pool_manager_galera_password }}"
     - name: Install bind9
-      apt:
-        package: bind9
+      package:
+        name: "{{ bind_package_name }}"
         state: present
     - name: Drop bind configuration
       copy:
-        src: named.conf.options
-        dest: /etc/bind/named.conf.options
+        src: "{{ named_src_file }}"
+        dest: "{{ named_config_file }}"
+    - name: fix perms for named directory (centos)
+      file:
+        mode: '770'
+        state: directory
+        path: '/var/named/'
+        owner: 'root'
+        group: 'named'
+      when:
+        - ansible_pkg_mgr == 'yum'
     - name: Restart bind9
       service:
-        name: bind9
-        state: restarted
+        name: "{{ bind_service_name }}"
+        state: "{{ bind_service_state }}"
+  vars:
+    named_config_file: "{{ (ansible_pkg_mgr == 'apt') | ternary('/etc/bind/named.conf.options','/etc/named.conf') }}"
+    named_src_file: "{{ (ansible_pkg_mgr == 'apt') | ternary('named.conf.options','named.conf') }}"
+    bind_package_name: "{{ (ansible_pkg_mgr == 'apt') | ternary('bind9','bind') }}"
+    bind_service_name: "{{ (ansible_pkg_mgr == 'apt') | ternary('bind9','named') }}"
+    bind_service_state: "{{ (ansible_pkg_mgr == 'apt') | ternary('restarted','started') }}"
   roles:
     - role: "os_designate"
   vars_files:
@@ -53,11 +68,13 @@
   tasks:
     - name: Copy sample pools.yaml file
       copy:
-        src: pools.yaml.sample
+        src: "{{ sample_pool_file }}"
         dest: /etc/designate/pools.yaml
     - name: Import sample pools.yaml file
       shell: |
         . /root/openrc
         {{ designate_bin }}/designate-manage pool update --file /etc/designate/pools.yaml
+  vars:
+    sample_pool_file: "{{ (ansible_pkg_mgr == 'apt') | ternary('pools.yaml.sample','pools.yaml.sample.centos') }}"
   vars_files:
     - common/test-vars.yml
