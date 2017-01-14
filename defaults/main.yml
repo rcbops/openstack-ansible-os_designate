@@ -44,6 +44,9 @@ designate_bin: "/openstack/venvs/designate-{{ designate_venv_tag }}/bin"
 #  designate_etc_dir: "/usr/local/etc/designate"
 designate_etc_dir: "{{ designate_bin | dirname }}/etc/designate"
 
+# venv_download, even when true, will use the fallback method of building the
+# venv from scratch if the venv download fails.
+designate_venv_download: "{{ not designate_developer_mode | bool }}"
 # URL of the pre-built virtualenv
 designate_venv_download_url: http://127.0.0.1/venvs/untagged/ubuntu/designate.tgz
 
@@ -151,4 +154,3 @@ designate_policy_overrides: {}
 designate_designate_conf_overrides: {}
 designate_api_paste_ini_overrides: {}
 designate_rootwrap_conf_overrides: {}
-
