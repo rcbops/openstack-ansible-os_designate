@@ -53,4 +53,4 @@
   with_dict: "{{ designate_services }}"
   when: inventory_hostname in groups[item.value.group]
   notify:
-    - Reload systemd daemon
+    - Restart designate services
