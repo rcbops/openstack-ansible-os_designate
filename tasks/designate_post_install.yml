@@ -43,6 +43,12 @@
       config_type: "ini"
   notify: Restart designate services
 
+- name: Create Designate pools.yaml file
+  copy:
+    content: "{{ designate_pools_yaml | to_nice_yaml }}"
+    dest: "/etc/designate/pools.yaml"
+  when: designate_pools_yaml is defined
+
 - name: Copy rootwrap filters
   copy:
     src: "{{ item }}"

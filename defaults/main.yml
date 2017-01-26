@@ -80,12 +80,43 @@ designate_pool_target_uuid: f02a0c72-c701-4ec2-85d7-197b30992ce9
 # Enable/Disable Ceilometer
 designate_ceilometer_enabled: False
 
-# Designate APIs enabled
-designate_enable_v1_api: True
-designate_enable_v2_api: True
-
 # Designate services info
 designate_role_name: admin
+
+## DNS Backend Configuration
+#  Configuration for the DNS backend that Designate will talk to, Designate
+#  supports lots of backends, bind9, powerdns, nsd, djb, dyn, akamai, etc.
+#  DNS Backends are configured via a YAML file that Designate reads. The DNS
+#  server need not be in the actual Designate container, but for development,
+#  or for some internal addressing use cases, it may make sense.
+
+# YAML to use for the Designate pools.yaml file. If this variable is defined,
+# a pools.yaml file will be written to /etc/designate/pools.yaml with the
+# provided YAML data.
+#
+# This is some example pools.yaml information that will work with a
+# simple bind9 installation in the same container as Designate.
+# designate_pools_yaml:
+#   - name: "default"
+#     description: Default BIND9 Pool
+#     attributes: {}
+#     ns_records:
+#       - hostname: ns1.example.org.
+#         priority: 1
+#     nameservers:
+#       - host: 127.0.0.1
+#         port: 53
+#     targets:
+#       - type: bind9
+#         description: BIND9 Server
+#         masters:
+#           - host: 127.0.0.1
+#             port: 5354
+#         options:
+#           host: 127.0.0.1
+#           port: 53
+#           rndc_host: 127.0.0.1
+#           rndc_port: 953
 
 ## Service Type and Data
 designate_service_region: RegionOne
