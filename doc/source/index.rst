@@ -12,6 +12,11 @@ This role will install the following services:
     * designate-mdns
     * designate-sink
 
+The DNS servers Designate will interface with can be defined in the
+``designate_pools_yaml`` variable. This is eventually written to the Designate
+`pools.yaml <http://docs.openstack.org/developer/designate/pools.html#managing-pools>`_
+file.
+
 To clone or view the source code for this repository, visit the role repository
 for `os_designate <https://github.com/openstack/openstack-ansible-os_designate>`_.
 
