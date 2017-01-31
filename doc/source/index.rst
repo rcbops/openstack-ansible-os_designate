@@ -7,8 +7,8 @@ This Ansible role installs and configures OpenStack Designate.
 This role will install the following services:
     * designate-api
     * designate-central
-    * designate-pool-manager
-    * designate-zone-manager
+    * designate-worker
+    * designate-producer
     * designate-mdns
     * designate-sink
 
@@ -34,7 +34,6 @@ Required variables
 
     designate_galera_address
     designate_galera_password
-    designate_pool_manager_galera_password
     designate_service_password
     designate_rabbitmq_password
 
