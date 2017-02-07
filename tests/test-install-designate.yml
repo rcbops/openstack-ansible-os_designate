@@ -25,9 +25,6 @@
     - include: common/create-grant-db.yml
       db_name: "{{ designate_galera_user }}"
       db_password: "{{ designate_galera_password }}"
-    - include: common/create-grant-db.yml
-      db_name: "{{ designate_pool_manager_galera_database }}"
-      db_password: "{{ designate_pool_manager_galera_password }}"
     - name: Install bind9
       package:
         name: "{{ bind_package_name }}"
