@@ -1,4 +1,0 @@
-## Designate service
-designate_git_repo: https://git.openstack.org/openstack/designate
-designate_git_install_branch: master
-designate_git_dest: "/opt/designate_{{ designate_git_install_branch | replace('/', '_') }}"
