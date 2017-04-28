@@ -37,7 +37,7 @@
     - designate-install
     - designate-config
 
-- include: designate_init_common.yml
+- include: "designate_init_{{ ansible_service_mgr }}.yml"
   tags:
     - designate-install
 
