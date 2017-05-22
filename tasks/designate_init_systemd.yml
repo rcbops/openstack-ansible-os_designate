@@ -42,6 +42,8 @@
     group: "root"
   with_dict: "{{ designate_services }}"
   when: inventory_hostname in groups[item.value.group]
+  notify:
+    - Restart designate services
 
 - name: Place the systemd init script
   config_template:
