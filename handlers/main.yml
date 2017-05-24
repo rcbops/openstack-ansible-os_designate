@@ -15,9 +15,7 @@
 # limitations under the License.
 
 - name: Restart designate services
-  debug:
-    msg: "Restarting services"
-  changed_when: true
+  command: "/bin/true"
   notify:
     - Stop services
     - Copy new policy file into place
