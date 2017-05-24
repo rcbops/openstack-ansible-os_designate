@@ -46,6 +46,9 @@
   copy:
     src: "/etc/designate/policy.json-{{ designate_venv_tag }}"
     dest: "/etc/designate/policy.json"
+    owner: "root"
+    group: "{{ designate_system_group_name }}"
+    mode: "0640"
     remote_src: yes
 
 - name: Start services
