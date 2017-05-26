@@ -38,6 +38,7 @@
     name: "{{ designate_requires_pip_packages }}"
     state: "{{ designate_pip_package_state }}"
     extra_args: >-
+      {{ designate_developer_mode | ternary(pip_install_developer_constraints | default('--constraint /opt/developer-pip-constraints.txt'), '') }}
       {{ (pip_install_upper_constraints is defined) | ternary('--constraint ' + pip_install_upper_constraints | default(''),'') }}
       {{ pip_install_options | default('') }}
   register: install_packages
@@ -90,7 +91,7 @@
     virtualenv: "{{ designate_bin | dirname }}"
     virtualenv_site_packages: "no"
     extra_args: >-
-      {{ keystone_developer_mode | ternary('--constraint /opt/developer-pip-constraints.txt', '') }}
+      {{ designate_developer_mode | ternary(pip_install_developer_constraints | default('--constraint /opt/developer-pip-constraints.txt'), '') }}
       {{ (pip_install_upper_constraints is defined) | ternary('--constraint ' + pip_install_upper_constraints | default(''),'') }}
       {{ pip_install_options | default('') }}
   register: install_packages
