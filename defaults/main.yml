@@ -141,11 +141,11 @@ designate_requires_pip_packages:
 
 # Common pip packages
 designate_pip_packages:
+  - cryptography
   - designate
   - python-designateclient
   - PyMySQL
   - python-memcached
-  - pycrypto
   - warlock
 
 designate_central_init_overrides: {}
