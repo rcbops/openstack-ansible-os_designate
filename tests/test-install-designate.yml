@@ -30,8 +30,8 @@
         name: "{{ bind_package_name }}"
         state: present
     - name: Drop bind configuration
-      copy:
-        src: "{{ named_src_file }}"
+      template:
+        src: "named.conf.j2"
         dest: "{{ named_config_file }}"
     - name: fix perms for named directory (centos)
       file:
@@ -48,7 +48,6 @@
         state: "{{ bind_service_state }}"
   vars:
     named_config_file: "{{ (ansible_pkg_mgr == 'apt') | ternary('/etc/bind/named.conf.options','/etc/named.conf') }}"
-    named_src_file: "{{ (ansible_pkg_mgr == 'apt') | ternary('named.conf.options','named.conf') }}"
     bind_package_name: "{{ (ansible_pkg_mgr == 'apt') | ternary('bind9','bind') }}"
     bind_service_name: "{{ (ansible_pkg_mgr == 'apt') | ternary('bind9','named') }}"
     bind_service_state: "{{ (ansible_pkg_mgr == 'apt') | ternary('restarted','started') }}"

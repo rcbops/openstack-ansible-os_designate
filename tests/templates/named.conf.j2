@@ -1,7 +1,21 @@
+#
+# {{ ansible_managed }}
+#
 options {
+        {% if ansible_pkg_mgr == 'apt' %}
+        directory "/var/cache/bind";
+        {% elif ansible_pkg_mgr == 'yum' %}
         directory "/var/named";
+        {% elif ansible_pkg_mgr == 'zypper' %}
+        directory "/var/lib/named";
+        managed-keys-directory "/var/lib/named/dyn/";
+        dump-file "/var/log/named_dump.db";
+        statistics-file "/var/log/named.stats";
+        notify no;
+        disable-empty-zone "1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.IP6.ARPA";
+        {% endif %}
 
-        // If there is a firewall between you and any nameservers you want
+        // If there is a firewall between you and nameservers you want
         // to talk to, you may need to fix the firewall to allow multiple
         // ports to talk.  See http://www.kb.cert.org/vuls/id/800113
 
@@ -27,7 +41,7 @@ options {
         recursion no;
 };
 
-
+{% if ansible_pkg_mgr == 'yum' %}
 logging {
         channel default_debug {
                 file "data/named.run";
@@ -48,4 +62,31 @@ controls {
 
 include "/etc/named.rfc1912.zones";
 include "/etc/named.root.key";
+
+{% elif ansible_pkg_mgr == 'zypper' %}
+
+zone "." in {
+        type hint;
+        file "root.hint";
+};
+
+zone "localhost" in {
+        type master;
+        file "localhost.zone";
+};
+
+zone "0.0.127.in-addr.arpa" in {
+        type master;
+        file "127.0.0.zone";
+};
+
+zone "0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa" IN {
+    type master;
+    file "127.0.0.zone";
+};
+
+
+include "/etc/named.conf.include";
+
+{% endif %}
 
