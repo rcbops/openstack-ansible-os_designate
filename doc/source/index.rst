@@ -14,7 +14,7 @@ This role will install the following services:
 
 The DNS servers Designate will interface with can be defined in the
 ``designate_pools_yaml`` variable. This is eventually written to the Designate
-`pools.yaml <http://docs.openstack.org/developer/designate/pools.html#managing-pools>`_
+`pools.yaml <https://docs.openstack.org/designate/latest/admin/pools.html#managing-pools>`_
 file.
 
 To clone or view the source code for this repository, visit the role repository
