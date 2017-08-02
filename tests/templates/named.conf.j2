@@ -4,7 +4,7 @@
 options {
         {% if ansible_pkg_mgr == 'apt' %}
         directory "/var/cache/bind";
-        {% elif ansible_pkg_mgr == 'yum' %}
+        {% elif ansible_pkg_mgr in ['yum', 'dnf'] %}
         directory "/var/named";
         {% elif ansible_pkg_mgr == 'zypper' %}
         directory "/var/lib/named";
@@ -41,7 +41,7 @@ options {
         recursion no;
 };
 
-{% if ansible_pkg_mgr == 'yum' %}
+{% if ansible_pkg_mgr in ['yum', 'dnf'] %}
 logging {
         channel default_debug {
                 file "data/named.run";
