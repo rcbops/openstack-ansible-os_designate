@@ -19,16 +19,19 @@
   notify:
     - Stop services
     - Copy new policy file into place
+    - Reload systemd
     - Start services
+
+- name: Reload systemd
+  command: systemctl daemon-reload
+  when: ansible_service_mgr == 'systemd'
 
 - name: Stop services
   service:
     name: "{{ item.value.service_name }}"
     enabled: yes
     state: "stopped"
-    daemon_reload: "{{ (ansible_service_mgr == 'systemd') | ternary('yes', omit) }}"
   with_dict: "{{ designate_services }}"
-  when: inventory_hostname in groups[item.value.group]
   register: _stop
   until: _stop | success
   retries: 5
@@ -56,9 +59,7 @@
     name: "{{ item.value.service_name }}"
     enabled: yes
     state: "started"
-    daemon_reload: "{{ (ansible_service_mgr == 'systemd') | ternary('yes', omit) }}"
   with_dict: "{{ designate_services }}"
-  when: inventory_hostname in groups[item.value.group]
   register: _start
   until: _start | success
   retries: 5

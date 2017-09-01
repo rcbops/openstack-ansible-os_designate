@@ -23,7 +23,7 @@ designate_pip_package_state: "latest"
 
 ## The git source/branch
 designate_git_repo: https://git.openstack.org/openstack/designate
-designate_git_install_branch: stable/ocata
+designate_git_install_branch: stable/newton
 
 # Developer mode is used for role functional testing and allows the role
 # to build an environment directly from a git source without the presence
@@ -182,6 +182,7 @@ designate_services:
     group: designate_api
     service_name: designate-api
     init_config_overrides: "{{ designate_api_init_overrides }}"
+
 
 # This variable is used by the repo_build process to determine
 # which host group to check for members of before building the

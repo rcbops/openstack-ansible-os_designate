@@ -35,7 +35,7 @@
 
 - name: Install requires pip packages
   pip:
-    name: "{{ designate_requires_pip_packages }}"
+    name: "{{ designate_requires_pip_packages | join (' ') }}"
     state: "{{ designate_pip_package_state }}"
     extra_args: >-
       {{ (pip_install_upper_constraints is defined) | ternary('--constraint ' + pip_install_upper_constraints | default(''),'') }}
@@ -85,7 +85,7 @@
 
 - name: Install pip packages
   pip:
-    name: "{{ designate_pip_packages }}"
+    name: "{{ designate_pip_packages | join (' ') }}"
     state: "{{ designate_pip_package_state }}"
     virtualenv: "{{ designate_bin | dirname }}"
     virtualenv_site_packages: "no"
