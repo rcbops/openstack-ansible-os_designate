@@ -37,14 +37,6 @@ ssl = {{ designate_rabbitmq_use_ssl }}
 rabbit_notification_exchange = designate
 rabbit_notification_topic = notifications
 
-# TODO (zhongshengping): Currently pool update fail when using transport_url.
-# Remove this section after bug https://bugs.launchpad.net/designate/+bug/1673403 is fixed
-rabbit_port = {{ designate_rabbitmq_port }}
-rabbit_userid = {{ designate_rabbitmq_userid }}
-rabbit_password = {{ designate_rabbitmq_password }}
-rabbit_virtual_host = {{ designate_rabbitmq_vhost }}
-rabbit_hosts = {{ designate_rabbitmq_servers }}
-
 ########################
 ## Service Configuration
 ########################
