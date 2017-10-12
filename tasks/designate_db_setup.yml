@@ -18,6 +18,9 @@
   become: yes
   become_user: "{{ designate_system_user_name }}"
   changed_when: false
+  notify: Restart designate services
+  
+- meta: flush_handlers
 
 - name: Perform a Designate DNS pools update
   command: "{{ designate_bin }}/designate-manage pool update"
