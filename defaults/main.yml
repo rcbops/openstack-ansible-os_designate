@@ -148,6 +148,8 @@ designate_pip_packages:
   - pycrypto
   - warlock
 
+pip_install_options: "--isolated"
+
 designate_central_init_overrides: {}
 designate_worker_init_overrides: {}
 designate_producer_init_overrides: {}
